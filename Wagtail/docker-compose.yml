@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  # db:
+  #   image: mysql
+  #   ports:
+  #     - "3306:3306"
+  #   restart: always
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=some_password
+  #     - MYSQL_DATABASE=wagtail
+  #     - MYSQL_USER=wagtail
+  #     - MYSQL_PASSWORD=wagtail
+  #     - MYSQL_ROOT_HOST=wagtaildb
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/wagtail
+    # links:
+    #   - db
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DEV=True
+      - DATABASE_URL=wagtaildb
+      - SECRET_KEY=notasecretreplaceme
+    # depends_on:
+    #   - db
